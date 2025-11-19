@@ -1,7 +1,7 @@
 <?php
 require_once('config.php');
 
-// Check if the user is an admin;
+// Check if the user on the page is an admin;
 requireRole('admin');
 
 // Establish DB connection
@@ -117,9 +117,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // Fetch data needed for the page;
-$menu_items = $connection->query("SELECT * FROM menu_items ORDER BY name");
-$users = $connection->query("SELECT * FROM users WHERE role != 'admin' ORDER BY username");
-$orders = $connection->query("SELECT o.*, u.username as waiter_name, t.table_number FROM orders o JOIN users u ON o.waiter_id = u.id JOIN tables t ON o.table_id = t.id ORDER BY o.order_time DESC LIMIT 20");
+$menu_items = $connection->query(
+    "SELECT * 
+            FROM menu_items 
+            ORDER BY name"
+);
+
+$users = $connection->query(
+    "SELECT * 
+            FROM users 
+            WHERE role != 'admin' 
+            ORDER BY username"
+);
+
+$orders = $connection->query(
+    "SELECT orders.*, users.username as waiter_name, tables.table_number 
+            FROM orders
+            JOIN users ON orders.waiter_id = users.id 
+            JOIN tables ON orders.table_id = tables.id 
+            ORDER BY orders.order_time DESC 
+            LIMIT 20"
+);
+
 $stats = $connection->query("SELECT 
     COUNT(*) as total_orders,
     SUM(CASE WHEN status='completed' THEN 1 ELSE 0 END) as completed_orders,

@@ -1,3 +1,11 @@
+/*
+ *   This file showcases the schema and relationships between tables for the restaurant system.
+ *   As well as some initial sample data.
+ *   
+ *   It was also imported into the MySQL administration tool to create the database.
+ *
+ */
+
 CREATE DATABASE IF NOT EXISTS restaurant_system;
 
 USE restaurant_system;
