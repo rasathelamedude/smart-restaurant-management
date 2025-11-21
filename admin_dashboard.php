@@ -339,9 +339,9 @@ $stats = $connection->query("SELECT
                     <div class="form-group">
                         <label for="itemCategory">Category</label>
                         <select name="category" id="itemCategory" required>
-                            <option value="Appetizer">Appetizer</option>
-                            <option value="Main Course">Main Course</option>
-                            <option value="Dessert">Dessert</option>
+                            <option value="Appetizers">Appetizer</option>
+                            <option value="Main Dish">Main Dish</option>
+                            <option value="Desserts">Dessert</option>
                             <option value="Beverage">Beverage</option>
                         </select>
                     </div>
