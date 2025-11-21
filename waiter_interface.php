@@ -81,7 +81,7 @@ $my_orders = $connection->query(
         <h1>Waiter interface</h1>
         <div class="user-info">
             <span>Welcome back <?php echo htmlspecialchars($_SESSION['username']) ?></span>
-            <a class="btn-logout" href="login.php">Logout</a>
+            <a class="btn-logout" href="logout.php">Logout</a>
         </div>
     </div>
 

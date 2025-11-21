@@ -162,7 +162,7 @@ $stats = $connection->query("SELECT
         <h1>Admin Dashboard</h1>
         <div class="user-info">
             <span>Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-            <a href="login.php" class="btn-logout">Logout</a>
+            <a href="logout.php" class="btn-logout">Logout</a>
         </div>
     </div>
 
