@@ -36,8 +36,7 @@ CREATE TABLE tables (
     table_number INT UNIQUE NOT NULL,
     status ENUM(
         'available',
-        'occupied',
-        'reserved'
+        'occupied'
     ) DEFAULT 'available' NOT NULL
 );
 
