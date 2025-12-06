@@ -12,7 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
     $cart = json_decode($_POST['cart'], true);
     $waiter_id = $_SESSION['user_id'];
     $table_id = $_POST['table_id'];
+    $csrf_token = $_POST['csrf_token'];
 
+    // Check if the CSRF token is valid
+    if (!isset($_SESSION['csrf_token']) || $_SESSION['csrf_token'] !== $csrf_token) {
+        die('Invalid CSRF token. Cannot perform action.');
+    }
 
     if (!empty($cart)) {
         // Create order
@@ -56,14 +61,19 @@ $menu_items = $connection->query("SELECT * FROM menu_items ORDER BY category, na
 
 $tables = $connection->query("SELECT * FROM tables ORDER BY table_number");
 
-$my_orders = $connection->query(
+$orders_statement = $connection->prepare(
     "SELECT orders.*, tables.table_number
             FROM orders
             JOIN tables ON orders.table_id = tables.id
-            WHERE orders.waiter_id = {$_SESSION['user_id']}
+            WHERE orders.waiter_id = ?
             AND DATE(orders.order_time) = CURDATE()
             ORDER BY orders.order_time DESC"
 );
+
+$orders_statement->bind_param('i', $_SESSION['user_id']);
+$orders_statement->execute();
+$my_orders = $orders_statement->get_result();
+$orders_statement->close();
 ?>
 
 <!DOCTYPE html>
@@ -121,7 +131,7 @@ $my_orders = $connection->query(
                             <h3><?php echo htmlspecialchars($item['name']) ?></h3>
                             <p class="description"><?php echo htmlspecialchars($item['description']) ?></p>
                             <div class="price">
-                                <?php echo number_format($item['price'], 2) ?>
+                                $<?php echo number_format($item['price'], 2) ?>
                             </div>
                         </div>
                     <?php endwhile; ?>
@@ -145,7 +155,7 @@ $my_orders = $connection->query(
                                     </span>
                                 </div>
                                 <div>
-                                    Amount: <?php echo number_format($order['total_amount'], 2) ?>
+                                    Amount: $<?php echo number_format($order['total_amount'], 2) ?>
                                 </div>
                                 <div style="color: #666; font-size: 12px; margin-top: 5px;">
                                     <?php echo date('H:i', strtotime($order['order_time'])); ?>
@@ -186,6 +196,9 @@ $my_orders = $connection->query(
         </div>
     </div>
 
+    <script>
+        const CSFR_TOKEN = "<?php echo $_SESSION['csrf_token']; ?>";
+    </script>
     <script src="./scripts/waiter_interface.js" defer></script>
 </body>
 

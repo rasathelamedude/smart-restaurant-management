@@ -22,11 +22,10 @@ CREATE TABLE users (
 -- Items on the Menu
 CREATE TABLE menu_items (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,-
     description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     category VARCHAR(50) NOT NULL,
-    image_url VARCHAR(255),
     available BOOLEAN DEFAULT TRUE
 );
 
@@ -34,10 +33,7 @@ CREATE TABLE menu_items (
 CREATE TABLE tables (
     id INT PRIMARY KEY AUTO_INCREMENT,
     table_number INT UNIQUE NOT NULL,
-    status ENUM(
-        'available',
-        'occupied'
-    ) DEFAULT 'available' NOT NULL
+    status ENUM('available', 'occupied') DEFAULT 'available' NOT NULL
 );
 
 -- Customer orders created by the waiter
@@ -53,8 +49,8 @@ CREATE TABLE orders (
     ) DEFAULT 'pending',
     total_amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (waiter_id) REFERENCES users (id),
-    FOREIGN KEY (table_id) REFERENCES tables (id)
+    FOREIGN KEY (waiter_id) REFERENCES users (id) ON DELETE CASCADE,
+    FOREIGN KEY (table_id) REFERENCES tables (id) ON DELETE CASCADE
 );
 
 -- Items included in each order
@@ -64,7 +60,7 @@ CREATE TABLE order_items (
     menu_item_id INT NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
     price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders (id),
+    FOREIGN KEY (order_id) REFERENCES orders (id) ON DELETE CASCADE,
     FOREIGN KEY (menu_item_id) REFERENCES menu_items (id)
 );
 
@@ -105,62 +101,53 @@ INSERT INTO
         name,
         description,
         price,
-        category,
-        image_url
+        category
     )
 VALUES (
         'Margherita Pizza',
         'Classic pizza with tomato, mozzarella, and basil',
         12.99,
-        'Main Course',
-        'pizza.jpg'
+        'Main Course'
     ),
     (
         'Caesar Salad',
         'Fresh romaine lettuce with Caesar dressing and croutons',
         8.99,
-        'Appetizer',
-        'salad.jpg'
+        'Appetizer'
     ),
     (
         'Grilled Salmon',
         'Fresh Atlantic salmon with herbs and lemon',
         18.99,
-        'Main Course',
-        'salmon.jpg'
+        'Main Course'
     ),
     (
         'Pasta Carbonara',
         'Creamy pasta with bacon and parmesan',
         14.99,
-        'Main Course',
-        'pasta.jpg'
+        'Main Course'
     ),
     (
         'Chocolate Lava Cake',
         'Warm chocolate cake with molten center',
         6.99,
-        'Dessert',
-        'cake.jpg'
+        'Dessert'
     ),
     (
         'Tiramisu',
         'Classic Italian dessert with coffee and mascarpone',
         7.99,
-        'Dessert',
-        'tiramisu.jpg'
+        'Dessert'
     ),
     (
         'Fresh Lemonade',
         'Homemade lemonade with mint',
         3.99,
-        'Beverage',
-        'lemonade.jpg'
+        'Beverage'
     ),
     (
         'Cappuccino',
         'Espresso with steamed milk foam',
         4.50,
-        'Beverage',
-        'cappuccino.jpg'
+        'Beverage'
     );

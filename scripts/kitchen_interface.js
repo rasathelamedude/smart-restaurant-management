@@ -26,10 +26,7 @@ async function updateStatus(order_id, new_status) {
       card.style.opacity = "0";
       card.style.transform = "scale(0.8)";
 
-      // Refresh after the animations
-      setTimeout(() => {
-        location.reload;
-      }, 300);
+      location.reload();
     }
   } catch (error) {
     console.error("Error:", error);

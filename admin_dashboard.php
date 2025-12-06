@@ -11,6 +11,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Get the action user tries to do
     $action = $_POST['action'];
 
+    // Get the CSRF token
+    $csrf_token = $_POST['csrf_token'];
+
+    // Check if the CSRF token is valid
+    if (!isset($_SESSION['csrf_token']) || $_SESSION['csrf_token'] !== $csrf_token) {
+        die('Invalid CSRF token. Cannot perform action.');
+    }
+
     if (isset($action)) {
         // Figure out which action we're doing
         switch ($action) {
@@ -39,6 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // execute the statment
                 $statement->execute();
                 $statement->close();
+                header('Location: admin_dashboard.php');
                 break;
 
             // Update item request
@@ -72,6 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $statement->execute();
                 $statement->close();
+                header('Location: admin_dashboard.php');
                 break;
 
             // Delete item request
@@ -84,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $statement->execute();
                 $statement->close();
+                header('Location: admin_dashboard.php');
                 break;
 
             // Add user request
@@ -100,6 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 $statement->execute();
                 $statement->close();
+                header('Location: admin_dashboard.php');
                 break;
 
             // Delete user request
@@ -111,6 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $statement->bind_param('i', $user_id);
                 $statement->execute();
                 $statement->close();
+                header('Location: admin_dashboard.php');
                 break;
         }
     }
@@ -226,6 +239,8 @@ $stats = $connection->query("SELECT
                                     </button>
 
                                     <form method="POST" style="display: inline;">
+                                        <input type="hidden" name="csrf_token"
+                                            value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <input type="hidden" name="action" value="delete_item">
                                         <input type="hidden" name="item_id" value="<?php echo $item['id'] ?>">
                                         <button type="submit" class="btn btn-danger"
@@ -262,6 +277,8 @@ $stats = $connection->query("SELECT
                                 <td><?php echo ucfirst($user['role']) ?></td>
                                 <td>
                                     <form method="POST" style="display:inline;">
+                                        <input type="hidden" name="csrf_token"
+                                            value="<?php echo $_SESSION['csrf_token']; ?>">
                                         <input type="hidden" name="action" value="delete_user">
                                         <input type="hidden" name="user_id" value="<?php echo $user['id'] ?>">
                                         <button type="submit" class="btn btn-danger"
@@ -318,6 +335,7 @@ $stats = $connection->query("SELECT
             <div class="modal-content">
                 <h2 id="itemModalTitle">Add Menu Item</h2>
                 <form method="POST">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <input type="hidden" name="action" value="add_item" id="itemAction">
                     <input type="hidden" name="item_id" id="itemId">
 
@@ -339,9 +357,9 @@ $stats = $connection->query("SELECT
                     <div class="form-group">
                         <label for="itemCategory">Category</label>
                         <select name="category" id="itemCategory" required>
-                            <option value="Appetizers">Appetizer</option>
+                            <option value="Appetizer">Appetizer</option>
                             <option value="Main Dish">Main Dish</option>
-                            <option value="Desserts">Dessert</option>
+                            <option value="Dessert">Dessert</option>
                             <option value="Beverage">Beverage</option>
                         </select>
                     </div>
@@ -364,6 +382,7 @@ $stats = $connection->query("SELECT
             <div class="modal-content">
                 <h2>Add Staff Member</h2>
                 <form method="POST">
+                    <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                     <input type="hidden" name="action" value="add_user">
 
                     <div class="form-group">

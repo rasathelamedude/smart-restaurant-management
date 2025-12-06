@@ -144,6 +144,7 @@ async function placeOrder() {
   formData.append("place_order", "1");
   formData.append("table_id", selectedTableId);
   formData.append("cart", JSON.stringify(cart));
+  formData.append("csrf_token", CSFR_TOKEN);
 
   // make a post request to the server to create the order
   try {
