@@ -12,7 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $connection = getConnection();
 
         // Prepare sql statement to fetch user
-        $statement = $connection->prepare("SELECT id, username, password, role FROM users WHERE username = ?");
+        $statement = $connection->prepare(
+            "SELECT id, username, password, role FROM users WHERE username = ?"
+        );
         $statement->bind_param('s', $username);
         $statement->execute();
 
@@ -81,6 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label for="username" id="username">Username</label>
                 <input type="text" id="username" name="username" required>
             </div>
+
             <div class="form-group">
                 <label for="password" id="password">Password</label>
                 <input type="password" id="password" name="password" required>
