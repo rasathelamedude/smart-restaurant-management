@@ -32,8 +32,7 @@ CREATE TABLE menu_items (
 -- Restaurant Tables
 CREATE TABLE tables (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    table_number INT UNIQUE NOT NULL,
-    status ENUM('available', 'occupied') DEFAULT 'available' NOT NULL
+    table_number INT UNIQUE NOT NULL
 );
 
 -- Customer orders created by the waiter
@@ -44,8 +43,7 @@ CREATE TABLE orders (
     status ENUM(
         'pending',
         'preparing',
-        'completed',
-        'delivered'
+        'completed'
     ) DEFAULT 'pending',
     total_amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     order_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,

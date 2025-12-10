@@ -46,12 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] === "POST") {
         $statement->execute();
         $statement->close();
 
-        // Update the table's status
-        $statement = $connection->prepare("UPDATE tables SET status = 'occupied' WHERE id = ?");
-        $statement->bind_param("i", $table_id);
-        $statement->execute();
-        $statement->close();
-
         echo json_encode(['success' => true, 'order_id' => $order_id]);
         exit();
     }
@@ -104,7 +98,7 @@ $orders_statement->close();
                 <h2>Select Table</h2>
                 <div class="table-selector">
                     <?php while ($table = $tables->fetch_assoc()): ?>
-                        <button class="table-btn <?php echo $table['status'] === 'occupied' ? "occupied" : "" ?>"
+                        <button class="table-btn"
                             onclick="selectTable(<?php echo $table['id'] ?>, <?php echo $table['table_number'] ?>)"
                             data-table-id="<?php echo $table['id'] ?>">
                             Table <?php echo $table['table_number'] ?>

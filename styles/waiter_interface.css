@@ -97,11 +97,6 @@ body {
   border-color: #667eea;
 }
 
-.table-btn.occupied {
-  background: #fee;
-  border-color: #fcc;
-}
-
 .menu-categories {
   display: flex;
   gap: 10px;

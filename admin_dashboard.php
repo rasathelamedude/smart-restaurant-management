@@ -153,9 +153,13 @@ $orders = $connection->query(
 );
 
 $stats = $connection->query("SELECT 
-    COUNT(*) as total_orders,
-    SUM(CASE WHEN status='completed' THEN 1 ELSE 0 END) as completed_orders,
-    SUM(total_amount) as total_revenue
+    COUNT(*) AS total_orders,
+    (
+        SELECT COUNT(*) 
+        FROM orders 
+        WHERE status = 'completed' AND DATE(order_time) = CURDATE()
+    ) AS completed_orders,
+    SUM(total_amount) AS total_revenue
     FROM orders WHERE DATE(order_time) = CURDATE()")->fetch_assoc();
 ?>
 
@@ -377,7 +381,7 @@ $stats = $connection->query("SELECT
             </div>
         </div>
 
-        <!-- Add Modal -->
+        <!-- Add user Modal -->
         <div id="userModal" class="modal">
             <div class="modal-content">
                 <h2>Add Staff Member</h2>
