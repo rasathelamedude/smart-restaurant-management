@@ -22,8 +22,8 @@ CREATE TABLE users (
 -- Items on the Menu
 CREATE TABLE menu_items (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,-
-    description TEXT,
+    name VARCHAR(100) NOT NULL,
+    - description TEXT,
     price DECIMAL(10, 2) NOT NULL,
     category VARCHAR(50) NOT NULL,
     available BOOLEAN DEFAULT TRUE
@@ -82,17 +82,17 @@ VALUES (
     );
 
 INSERT INTO
-    tables (table_number, status)
-VALUES (1, 'available'),
-    (2, 'available'),
-    (3, 'available'),
-    (4, 'available'),
-    (5, 'available'),
-    (6, 'available'),
-    (7, 'available'),
-    (8, 'available'),
-    (9, 'available'),
-    (10, 'available');
+    tables (table_number)
+VALUES (1),
+    (2),
+    (3),
+    (4),
+    (5),
+    (6),
+    (7),
+    (8),
+    (9),
+    (10);
 
 INSERT INTO
     menu_items (
