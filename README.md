@@ -211,7 +211,7 @@ smart-restaurant-system/
 
 **Supervisor:** Dr. Safar Maghdid Asaad
 
-**Institution:** [Your University Name]
+**Institution:** Koya University
 
 **Date:** December 2025
 
