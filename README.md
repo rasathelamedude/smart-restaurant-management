@@ -168,10 +168,15 @@ The system uses 5 main tables:
 ## Security
 
 ✅ **Password Hashing** - bcrypt algorithm
+
 ✅ **SQL Injection Prevention** - Prepared statements
+
 ✅ **XSS Prevention** - htmlspecialchars() on all output
+
 ✅ **CSRF Protection** - Token validation on forms
+
 ✅ **Session Management** - Role-based access control
+
 ✅ **Input Validation** - Server-side checks
 
 ## Future Improvements
@@ -179,10 +184,7 @@ The system uses 5 main tables:
 - 🔮 WebSocket integration for true real-time updates
 - 🔮 Order modification after placement
 - 🔮 Payment processing and bill generation
-- 🔮 Detailed analytics and reporting
-- 🔮 Mobile app versions (iOS/Android)
 - 🔮 Customer self-ordering via QR codes
-- 🔮 Multi-language support
 
 ## Project Structure
 ```
